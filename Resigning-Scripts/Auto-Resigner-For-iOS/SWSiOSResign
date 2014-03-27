@@ -1,0 +1,190 @@
+#!/bin/bash
+
+# Copyright (c) 2014 BlackBerry Limited
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+
+echo "$(tput setaf 2)BlackBerry SWS Auto-Resigner for iOS v1.0.0  $(tput sgr 0)"
+
+echo "Looking for iOS Signing Identity..."
+if (set -u; : $SWSSIGNIDENTITY) 2> /dev/null 
+then
+	SWSsignidentity=$SWSSIGNIDENTITY
+	echo "Found it! Using Signing Identity: ${SWSSIGNIDENTITY}"
+else
+	echo "No Signing Found. Please Enter your Signing Identity. For Example: iPhone Distribution: COMPANY NAME, LLC (44343QX)"
+	echo -ne "> "
+	read SWSsignidentity
+	echo "Using Signing Identity: $SWSsignidentity"
+fi
+
+echo "Looking for iOS SWS Wrapped App..."
+if (set -u; : $SWSWrappedAppFile) 2> /dev/null 
+then
+	fileName=$SWSWrappedAppFile
+	echo "Using SWS Wrapped App File: ${filename}"
+else
+	echo "Wrapped App Enviroment Variable not set. Please Enter the full path to the wrapped app: /Users/User/sws/MyWrappedApp.ipa"
+	echo -ne "> "	
+	read fileName
+	if [ -f "$fileName" ]
+	then 
+		echo "Good. App File Found $fileName"
+	else
+		echo "$(tput setaf 5)ERROR: $(tput setaf 1)iOS SWS Wrapped App file name $fileName location is inaccurate $(tput sgr 0)"
+		exit -3
+	fi
+	
+	echo "Using Wrapped App: $fileName"
+fi
+
+
+echo "Looking for Mobile Provisioning Profile..."
+if (set -u; : $SWSProvisioningProfile) 2> /dev/null 
+then
+	ProvisionProfile=$SWSProvisioningProfile
+	echo "Found it! Using SWS Mobile Provisioning Profile: ${ProvisionProfile}"
+else
+	echo "SWS Mobile Provisioning Profile not set. Please enter the full path to your MobileProvisioningProfile: /Users/User/sws/ProfileName.mobileprovision"
+	echo -ne "> "	
+	read ProvisionProfile
+	if [ -f "$ProvisionProfile" ]
+	then 
+		echo "Good. Provisioning Profile File Found $ProvisionProfile"
+	else
+		echo "$(tput setaf 5)ERROR: $(tput setaf 1)Provisioning Profile $ProvisionProfile location is inaccurate $(tput sgr 0)"
+		exit -2
+	fi
+
+	echo "Using Mobile Provisioning Profile: $ProvisionProfile"
+fi
+
+
+# create a working temp directory to unzip and package the app. This direcctory will be auto deleted after the app is succesfully packaged
+if mkdir sws-resigned-iOS-app; then
+	echo "Created Directory sws-resigned-iOS-app"
+else
+	echo "$(tput setaf 5)ERROR: $(tput setaf 1)Could not create directory. Does this directory already exist? If so, delete it! If not, re-check permissions. $(tput sgr 0)"
+	exit -7
+fi
+
+cd sws-resigned-iOS-app
+
+# Parse the mobile provisioning profile and creating an entitlements file
+provisionvalue=`cat "${ProvisionProfile}"`
+parseEntitlement=${provisionvalue#*<key>Entitlements</key>}
+entitlementFromMPP=${parseEntitlement%%</dict>*}
+entitlementHeader1='<?xml version="1.0" encoding="UTF-8"?>'
+entitlementHeader2='<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">'
+entitlementHeader3='<plist version="1.0">'
+fullEntitlement=$entitlementHeader1$entitlementHeader2$entitlementHeader3"${entitlementFromMPP}</dict></plist>"
+echo "${fullEntitlement}" > "sws-entitlements.plist"
+echo "------------ Entitlements file used --------------"
+echo "${fullEntitlement}"
+echo "--------------------------------------------------"
+
+parseAppIDName=${provisionvalue#*AppIDName</key>*<string>}
+appIdName=${parseAppIDName%%</string>*}
+echo "${parseAppIDName2}"
+appidExtra=${fullEntitlement#*<key>application-identifier</key>}
+appidExtra=${appidExtra%%</string>*}
+fullappid=${appidExtra#*<string>}
+appid=${fullappid#*.}
+echo "${appid}"
+
+
+#Extract the ipa file
+echo -e "$(tput setaf 2)Step 1 - unzipping file ${fileName} $(tput sgr 0)"
+if unzip "$fileName"; then
+	echo "File unzipped!"
+else
+	echo "$(tput setaf 5)ERROR: $(tput setaf 1) Unzipping file failed! Is $fileName valid? $(tput sgr 0)"
+	echo "The working folder sws-resigned-iOS-app has been created. Please delete it after diagnosing the error"
+	
+	exit -11
+fi
+
+appName=`ls Payload`
+if [ "${appName}" == "${appIdName}".app ]; then
+	echo "INFO: The extracted AppName matches that of the provisioning profile. This is good."
+else
+	echo "appName = $appName ; appIdName=$appIdName"
+	echo "$(tput setaf 3)WARN: The AppIDName and the AppName aren't the same. Are you using the wrong mobile provisioning profile? Proceeding anyway...$(tput sgr 0)"
+fi
+
+#Remove the existing CodeSignature
+echo "$(tput setaf 2)Step 2 - Removing code signatures in Payload/${appName}/_CodeSignatures $(tput sgr 0)"
+rm -r "Payload/${appName}/_CodeSignature"
+
+#Change the BundleID in the Info.plist file to match the certificate BundleID
+echo "$(tput setaf 2)Step 3 - Changing BundleIdentifier to ${appid} in Payload/${appName}/Info.plist $(tput sgr 0)"
+/usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier ${appid}" "Payload/${appName}/Info.plist"
+
+#Replace the embedded mobile provisioning profile
+echo "$(tput setaf 2)Step 4 - Moving ${ProvisionProfile} to Payload/${appName}/embedded.mobileprovision $(tput sgr 0)"
+cp "${ProvisionProfile}" "Payload/${appName}/embedded.mobileprovision"
+
+# Sign the app
+echo "$(tput setaf 2)Step 5 - Signing the app!$(tput sgr 0)"
+
+if [ -f "Payload/${appName}/ResourceRules.plist" ]; then 
+	echo "ResourceRules.plist exists, so I'm going to include it when I try and sign"
+	if /usr/bin/codesign -f -vvv -s "${SWSsignidentity}" --entitlements "sws-entitlements.plist" --resource-rules "Payload/${appName}/ResourceRules.plist" "Payload/${appName}"; then
+		echo "$(tput setaf 3)Signing Complete - No errors! It Worked! $(tput sgr 0)"
+	else
+		echo "$(tput setaf 5)FATAL ERROR: $(tput setaf 1)Signing FAILED!!!! Recheck parameters. You may have to do this manually. See instructions on developer.blackberry.com $(tput sgr 0)"
+		echo "Make sure your signing identity is correct, here is what I attempted to use: ${SWSsignidentity}"
+		echo "The working folder sws-resigned-iOS-app has been created. Please delete it after diagnosing the error"
+		echo "App Location: Payload/${appName}"
+
+		exit -6
+	fi
+else
+	echo "ResourceRules.plist not found. No Problem."
+
+	if /usr/bin/codesign -f -vvv -s "${SWSsignidentity}" --entitlements "sws-entitlements.plist" "Payload/${appName}"; then
+		echo "$(tput setaf 3)Signing Complete - No errors! Sweet! $(tput sgr 0)"
+	else
+		echo "$(tput setaf 5)FATAL ERROR: $(tput setaf 1)Signing FAILED!!!! Recheck parameters. You may have to do this manually. See instructions on developer.blackberry.com $(tput sgr 0)"
+		echo "Make sure your signing identity is correct, here is what I attempted to use: ${SWSsignidentity}"
+		echo "The working folder sws-resigned-iOS-app has been created. Please delete it after diagnosing the error"
+		echo "App Location: Payload/${appName}"
+
+		exit -6
+	fi
+fi
+
+
+#Verify the code signature
+echo "$(tput setaf 2)Step 6 - Verifing the app - READ BELOW CAREFULLY$(tput sgr 0)"
+codesign --verify -vvv "Payload/${appName}"
+codesign -dvvv "Payload/${appName}"
+
+#newFileName 
+newFileName=${appIdName}-resigned.ipa
+
+# make a backup of the entitlements file in /Payload/AppName.app/Entitlements.plist
+rm Payload/${appName}/Entitlements.plist 2> /dev/null 
+mv sws-entitlements.plist Payload/${appName}/Entitlements.plist
+
+
+#Repackage the file
+echo "$(tput setaf 2)Step 7 - zipping the app ${newFileName} $(tput sgr 0)"
+zip -qr ${newFileName} Payload/
+mv ${newFileName} ../
+cd ..
+rm -rf sws-resigned-iOS-app
+echo "$(tput setaf 2)Step 8 - All Done! It's your turn to go deploy the file $(tput setaf 4)${newFileName}$(tput setaf 2) using BES UDS after you review the message in Step 6$(tput sgr 0)"
+
+exit 0
