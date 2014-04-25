@@ -1,0 +1,1406 @@
+{
+    "type": "Ext.Container",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "container|animation": null,
+        "designer|initialView": true,
+        "designer|userClassName": "MainECLContainer",
+        "fullscreen": true,
+        "id": "MainECLContainer",
+        "layout": "card",
+        "requires": [
+            "Ext.MessageBox"
+        ]
+    },
+    "designerId": "88b84685-8b53-4fd9-84e2-9a919e8b0403",
+    "cn": [
+        {
+            "type": "Ext.Panel",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "id": "ContactListPanel",
+                "itemId": "ContactListPanel",
+                "layout": "fit",
+                "ui": "light"
+            },
+            "designerId": "bc5f8755-7ee3-49bf-aacf-d1b5aa481a33",
+            "cn": [
+                {
+                    "type": "Ext.dataview.List",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "grouped": true,
+                        "hideOnMaskTap": false,
+                        "id": "ContactList",
+                        "itemId": "ContactList",
+                        "masked": [
+                            "{",
+                            "    xtype: 'loadmask',",
+                            "    message: 'Loading from Server'",
+                            "}"
+                        ],
+                        "store": "PeopleStore",
+                        "ui": "round"
+                    },
+                    "designerId": "d2f77720-d5c6-4773-a1d9-9419b2bfff59",
+                    "cn": [
+                        {
+                            "type": "basiceventbinding",
+                            "reference": {
+                                "name": "listeners",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "fn": "onContactListItemTap",
+                                "implHandler": [
+                                    "// Event handler - Each item tap",
+                                    "",
+                                    "var contactlist = this.down('#ContactList');",
+                                    "var contactdetailscontainer = this.down('#ContactDetailContainer');",
+                                    "var contactdetailsinfocontainer = this.down('#ContactDetailsInfoContainer');",
+                                    "var data = record.data;",
+                                    "",
+                                    "contactlist.fireEvent('loadAndShowDetails', contactlist, contactdetailscontainer,",
+                                    "contactdetailsinfocontainer, data);",
+                                    "",
+                                    "",
+                                    "// **** new items",
+                                    "// todo: delete event listeners",
+                                    "",
+                                    "var that = this;",
+                                    "",
+                                    "contactdetailscontainer.element.on('swipe', function(e){",
+                                    "    if(e.direction=='right'){",
+                                    "        that.onBackButtonTap();",
+                                    "    }",
+                                    "});",
+                                    "",
+                                    "this.down('#ContactListActionBar').hide();"
+                                ],
+                                "name": "itemtap"
+                            },
+                            "designerId": "3c6ea92f-0bfa-4e07-b327-964bd85f4d0c"
+                        },
+                        {
+                            "type": "Ext.XTemplate",
+                            "reference": {
+                                "name": "itemTpl",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "designer|displayName": "itemTpl",
+                                "implHandler": [
+                                    "<div class=\"photoframe\"><img class=\"photo\" src=\"{photo_url}\" width=\"40\" height=\"40\"/></div>",
+                                    "",
+                                    "<div class=\"personinfo\">{lastname}, {firstname}<br><small>{position}</small></div>"
+                                ]
+                            },
+                            "designerId": "e270c1ea-1974-4136-8840-afbb1833f8a0"
+                        },
+                        {
+                            "type": "Ext.dataview.IndexBar",
+                            "reference": {
+                                "name": "indexBar",
+                                "type": "object"
+                            },
+                            "codeClass": null,
+                            "designerId": "761ca9ef-7e78-4517-a46f-71909c5359d6"
+                        },
+                        {
+                            "type": "Ext.Toolbar",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "docked": "bottom",
+                                "hidden": true,
+                                "id": "ContactListActionBar"
+                            },
+                            "designerId": "ab6e156f-3a2f-4d15-9957-9b80bd894b99",
+                            "cn": [
+                                {
+                                    "type": "Ext.Spacer",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "df466b09-befd-4d53-82b2-7343d6bf12cd"
+                                },
+                                {
+                                    "type": "Ext.Button",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "iconCls": "search",
+                                        "id": "SearchContactBtn",
+                                        "itemId": "mybutton",
+                                        "text": "Search"
+                                    },
+                                    "designerId": "8d74e510-d411-4703-b524-07bd38c0b909",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onSearchContactBtnTap",
+                                                "implHandler": [
+                                                    "var searchbar = Ext.getCmp('SearchBar');",
+                                                    "if(searchbar.getHidden()){",
+                                                    "    searchbar.show(true);",
+                                                    "}",
+                                                    "if(!searchbar.getHidden()){",
+                                                    "    searchbar.hide();",
+                                                    "}"
+                                                ],
+                                                "name": "tap"
+                                            },
+                                            "designerId": "db9d079d-b2fb-4f2d-8690-7a14ca1c8f9a"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Spacer",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "designerId": "2425138a-4bd5-4cb2-a4d0-7162cfcbee7c"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Toolbar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "top",
+                        "id": "ContactListPanelToolbar",
+                        "itemId": "ContactListPanelToolbar",
+                        "scrollable": null,
+                        "title": "Executive Contact List",
+                        "ui": "light"
+                    },
+                    "designerId": "0eeedac7-465e-4604-9886-59aa7977c8d4",
+                    "cn": [
+                        {
+                            "type": "Ext.Spacer",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "designerId": "f009b645-dc6b-41f0-8f25-300a8e35e490"
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Toolbar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|uiInterfaceName": "light",
+                        "docked": "top",
+                        "hidden": true,
+                        "id": "SearchBar",
+                        "ui": "light"
+                    },
+                    "designerId": "50404868-8aaa-41db-881f-a172514f7bba",
+                    "cn": [
+                        {
+                            "type": "Ext.field.Text",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "itemId": "mytextfield",
+                                "label": null,
+                                "layout|flex": 1,
+                                "placeHolder": "Contact's Name"
+                            },
+                            "designerId": "d6360a0b-3aaa-4362-a411-a49ce108f549",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onMytextfieldBlur",
+                                        "implHandler": [
+                                            "Ext.getCmp('SearchBar').hide();"
+                                        ],
+                                        "name": "blur"
+                                    },
+                                    "designerId": "7abaf94e-ea3f-4b62-8e5e-4ef044361c56"
+                                },
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onMytextfieldKeyup",
+                                        "implHandler": [
+                                            "var value = textfield.getValue();",
+                                            "if (value && value.length) {",
+                                            "    var filter = [{",
+                                            "        filterFn: function(record) {",
+                                            "            var firstName = record.get('firstname').toLowerCase(),",
+                                            "            lastName = record.get('lastname').toLowerCase();",
+                                            "",
+                                            "            if (firstName.match(value) || lastName.match(value)) {",
+                                            "                return true;",
+                                            "            }",
+                                            "            return false;",
+                                            "        }",
+                                            "    }];",
+                                            "",
+                                            "    Ext.getStore('PeopleStore').filter(filter);",
+                                            "}",
+                                            "else {",
+                                            "    Ext.getStore('PeopleStore').clearFilter();",
+                                            "}",
+                                            ""
+                                        ],
+                                        "name": "keyup"
+                                    },
+                                    "designerId": "df2fad5f-5a6e-4026-948f-bf12c9802df1"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "hideAnimation": null,
+                "id": "ContactDetailContainer",
+                "itemId": "ContactDetailContainer",
+                "layout": "fit",
+                "scrollable": null,
+                "showAnimation": null,
+                "style": "background-color: #f0f0f0",
+                "styleHtmlCls": null
+            },
+            "designerId": "dcd09911-c286-401f-afd8-97224a5bfd60",
+            "cn": [
+                {
+                    "type": "Ext.Toolbar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "top",
+                        "hidden": true,
+                        "id": "ContactDetailsHeaderToolbar",
+                        "ui": "light"
+                    },
+                    "designerId": "f62a3b32-d96b-46e1-9512-069157cc4506"
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "ContactDetailsRootContainer",
+                        "layout": null,
+                        "scrollable": "vertical",
+                        "width": null
+                    },
+                    "designerId": "936c4099-d1e6-45fd-9ac7-a5bc55590562",
+                    "cn": [
+                        {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "container|align": "start",
+                                "docked": null,
+                                "height": 120,
+                                "id": "ContactDetailsSummaryContainer",
+                                "itemId": "ContactDetailsSummaryContainer",
+                                "layout": "hbox",
+                                "minHeight": null,
+                                "scrollable": null,
+                                "width": null
+                            },
+                            "designerId": "2c2c6809-7ad9-4577-8a7e-d2f626f57fe5",
+                            "cn": [
+                                {
+                                    "type": "Ext.Img",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "border": 2,
+                                        "height": "100px",
+                                        "id": "ContactImage",
+                                        "itemId": "ContactImage",
+                                        "margin": "10px",
+                                        "src": "resources/images/greyman.jpg",
+                                        "style": "border-color: #ccc; border-style: solid;",
+                                        "width": "100px"
+                                    },
+                                    "designerId": "4bcda103-5dac-45be-b3ef-af4209a6df29",
+                                    "cn": [
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onContactImageTap",
+                                                "implHandler": [
+                                                    "that = this;",
+                                                    "",
+                                                    "if(image.getSrc()=='resources/images/greyman.jpg'){",
+                                                    "    return;",
+                                                    "}",
+                                                    "",
+                                                    "var imgContainer = this.down('#ContactDetailsImageContainer');",
+                                                    "this.animateActiveItem(imgContainer,",
+                                                    "{type: 'slide'}",
+                                                    ");",
+                                                    "",
+                                                    "var imageactionbar = this.down('#ContactDetailsImageActionBar');",
+                                                    "imageactionbar.hide();",
+                                                    "",
+                                                    "",
+                                                    "imgContainer.element.on('swipe', function(e){",
+                                                    "    if(e.direction=='right'){",
+                                                    "        that.onContactDetailsImgBackTap();",
+                                                    "    }",
+                                                    "});",
+                                                    "imgContainer.element.on('tap', function(e){",
+                                                    "    if(imageactionbar.getHidden()==true){",
+                                                    "    \timageactionbar.show(true);",
+                                                    "    }",
+                                                    "    else {",
+                                                    "        imageactionbar.hide();",
+                                                    "    }",
+                                                    "});",
+                                                    "",
+                                                    "",
+                                                    "that=this;",
+                                                    "Ext.Function.defer(function(){",
+                                                    "",
+                                                    "    if(that.getActiveItem().id==imgContainer.id){",
+                                                    "        imageactionbar.show(true);",
+                                                    "    }",
+                                                    "}, 5000);",
+                                                    ""
+                                                ],
+                                                "name": "tap"
+                                            },
+                                            "designerId": "c047f1d0-f8e3-4585-bb49-3e9b2b1b3f70"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Container",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "id": "ContactDetailsSummaryInfoContainer",
+                                        "layout": "vbox",
+                                        "margin": "10px",
+                                        "scrollable": null,
+                                        "width": "100%"
+                                    },
+                                    "designerId": "8d823931-9a07-4e87-b35e-07fe1f4e34cb",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Label",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "html": "Full Name",
+                                                "id": "ContactDetailsFullnameLabel",
+                                                "itemId": "ContactDetailsFullnameLabel",
+                                                "style": null
+                                            },
+                                            "designerId": "78c03a35-f251-4ca7-8028-d4505d77aadf"
+                                        },
+                                        {
+                                            "type": "Ext.Label",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "html": null,
+                                                "id": "ContactDetailsPositionLabel",
+                                                "itemId": "ContactDetailsPositionLabel"
+                                            },
+                                            "designerId": "08b254b6-c2f1-403c-a564-b8343d7bfe17"
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Container",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "height": 300,
+                                "id": "ContactDetailsInfoContainer",
+                                "layout": null,
+                                "minHeight": null,
+                                "scrollable": false,
+                                "style": "margin: 7px",
+                                "ui": ""
+                            },
+                            "designerId": "bcc6e876-43a4-4112-bdca-e3e1475768c9",
+                            "cn": [
+                                {
+                                    "type": "Ext.dataview.List",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "height": 400,
+                                        "id": "DetailInfoActionList",
+                                        "itemId": "mylist1",
+                                        "store": "ActionStore",
+                                        "ui": "round",
+                                        "width": null
+                                    },
+                                    "designerId": "74b682aa-0099-4234-b71a-5b1223e483df",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.XTemplate",
+                                            "reference": {
+                                                "name": "itemTpl",
+                                                "type": "object"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "designer|displayName": "itemTpl",
+                                                "implHandler": [
+                                                    "<div class=\"photo2frame {icon2}\"></div>",
+                                                    "<tpl if='label2.length &lt; 25'><div class=\"personinfo\">{label1}<br><small>{label2}</small></div></tpl>",
+                                                    "<tpl if='label2.length &gt; 24'><div class=\"personinfo\">{label1}<br><span style=\"font-size:75%\"><small>{label2}</small></span></div></tpl>"
+                                                ]
+                                            },
+                                            "designerId": "5971abd1-88b8-481e-a2f8-aa7d397cded4"
+                                        },
+                                        {
+                                            "type": "basiceventbinding",
+                                            "reference": {
+                                                "name": "listeners",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "fn": "onDetailInfoActionListItemTap",
+                                                "implHandler": [
+                                                    "var data=record.data;",
+                                                    "console.log(data.action);",
+                                                    "if(data.action==\"email\"){",
+                                                    "    Ext.Msg.confirm('Compose Email', 'Leave this Application and Compose a new email',",
+                                                    "    function ( answer ) {",
+                                                    "        if ( answer == 'yes') {",
+                                                    "            window.location=('mailto:'+data.location);",
+                                                    "        }",
+                                                    "    });",
+                                                    "}",
+                                                    "else if(data.action==\"call\"){",
+                                                    "    Ext.Msg.confirm('Call Phone', 'Do you want to call this phone '+data.location,",
+                                                    "    function ( answer ) {",
+                                                    "        if ( answer == 'yes') {",
+                                                    "            window.location=('tel:'+data.location);",
+                                                    "        }",
+                                                    "    }",
+                                                    "    );",
+                                                    "}",
+                                                    "else if(data.action==\"bbm\"){",
+                                                    "    if(MyApp.globals.os==\"BlackBerry 10\"){",
+                                                    "        if(blackberry && blackberry.invoke){",
+                                                    "            blackberry.invoke.invoke({",
+                                                    "                action: 'bb.action.BBMCHAT',",
+                                                    "                uri: 'pin:' + data.bbmpin",
+                                                    "            });",
+                                                    "        }",
+                                                    "    }",
+                                                    "    else{",
+                                                    "        Ext.Msg.alert('BBM', 'This functionality will be added when the BBM API for '+MyApp.globals.os+\" will be available\");",
+                                                    "    }",
+                                                    "}",
+                                                    "else if(data.action==\"sms\"){",
+                                                    "    Ext.Msg.confirm('Text', 'Do you want to Text '+data.location+\"?\",",
+                                                    "    function ( answer ) {",
+                                                    "        if ( answer == 'yes') {",
+                                                    "            window.location=('sms:'+data.location);",
+                                                    "        }",
+                                                    "    }",
+                                                    "    );",
+                                                    "}",
+                                                    "else if(data.action==\"map\"){",
+                                                    "    var query = encodeURIComponent(data.location);",
+                                                    "    console.log(MyApp.globals.os);",
+                                                    "",
+                                                    "    if(Ext.getCmp('ContactDetailMapContainer').location!==null){",
+                                                    "        console.log(Ext.getCmp('ContactDetailMapContainer').location);",
+                                                    "    }",
+                                                    "",
+                                                    "    if(MyApp.globals.os==\"iOS\"){",
+                                                    "        nativeIcon = Ext.getCmp('nativeMapsIcon');",
+                                                    "        nativeIcon.query=query;",
+                                                    "        if(MyApp.globals.packager==\"Cordova\") nativeIcon.show(true);",
+                                                    "        var contactdetailmapcontainer = Ext.getCmp('ContactDetailMapContainer');",
+                                                    "        Ext.getCmp('ContactMap').getMap().panTo(Ext.getCmp('ContactDetailMapContainer').location);",
+                                                    "",
+                                                    "        this.animateActiveItem(contactdetailmapcontainer, {",
+                                                    "            type: 'slide',",
+                                                    "            direction: 'left'",
+                                                    "        });",
+                                                    "",
+                                                    "        return;",
+                                                    "        ",
+                                                    "    }",
+                                                    "    else if(MyApp.globals.os==\"BlackBerry 10\" && MyApp.globals.packager==\"WebWorks\"){",
+                                                    "        nativeIcon = Ext.getCmp('nativeMapsIcon');",
+                                                    "        ",
+                                                    "        nativeIcon.show(true);",
+                                                    "        ",
+                                                    "        var contactdetailmapcontainer = Ext.getCmp('ContactDetailMapContainer');",
+                                                    "        Ext.getCmp('ContactMap').getMap().panTo(Ext.getCmp('ContactDetailMapContainer').location);",
+                                                    "",
+                                                    "        this.animateActiveItem(contactdetailmapcontainer, {",
+                                                    "            type: 'slide',",
+                                                    "            direction: 'left'",
+                                                    "        });",
+                                                    "",
+                                                    "        return;",
+                                                    "",
+                                                    "    }",
+                                                    "    else{",
+                                                    "",
+                                                    "        var contactdetailmapcontainer = Ext.getCmp('ContactDetailMapContainer');",
+                                                    "        Ext.getCmp('ContactMap').getMap().panTo(Ext.getCmp('ContactDetailMapContainer').location);",
+                                                    "",
+                                                    "        this.animateActiveItem(contactdetailmapcontainer, {",
+                                                    "            type: 'slide',",
+                                                    "            direction: 'left'",
+                                                    "        });",
+                                                    "",
+                                                    "        return;",
+                                                    "    }",
+                                                    "}",
+                                                    "else if(data.action==\"twitter\"){",
+                                                    "    var twitterAddress = data.location;",
+                                                    "    if(twitterAddress!==null && twitterAddress.length > 1){",
+                                                    "        window.open('http://www.twitter.com/'+twitterAddress.replace(\"@\",\"\"),'_system');",
+                                                    "",
+                                                    "    }",
+                                                    "    else{",
+                                                    "        console.log(\"error: Twitter address nonexistant - \"+data.location);",
+                                                    "    }",
+                                                    "}"
+                                                ],
+                                                "name": "itemtap"
+                                            },
+                                            "designerId": "2de4e605-c414-4334-b8a6-197f476e953f"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "Ext.Container",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "hidden": true,
+                                        "id": "DetailsLabelContainer"
+                                    },
+                                    "designerId": "2a160ffb-1b3b-4762-adad-f7d1aac97230",
+                                    "cn": [
+                                        {
+                                            "type": "Ext.Container",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "container|align": null,
+                                                "height": "50px",
+                                                "id": "ContactDetailEmailRow",
+                                                "layout": "hbox",
+                                                "scrollable": null
+                                            },
+                                            "designerId": "3b94674e-1263-4378-9e19-a0d42b781278",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "centered": false,
+                                                        "html": "Email",
+                                                        "id": "emailtitle",
+                                                        "layout|flex": 1,
+                                                        "margin": null,
+                                                        "padding": null,
+                                                        "style": "",
+                                                        "styleHtmlCls": "ContactDetailLabel",
+                                                        "styleHtmlContent": true,
+                                                        "ui": null
+                                                    },
+                                                    "designerId": "659675b4-b4c2-4af8-8213-63e044dfb17d"
+                                                },
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "id": "emaillabel",
+                                                        "layout|flex": 2,
+                                                        "styleHtmlCls": "ContactDetailValueLabel",
+                                                        "styleHtmlContent": true
+                                                    },
+                                                    "designerId": "db7f7166-715c-4505-9425-565fa5156e55"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Ext.Container",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "container|align": null,
+                                                "height": "50px",
+                                                "id": "ContactDetailWorkPhoneRow",
+                                                "layout": "hbox",
+                                                "scrollable": null
+                                            },
+                                            "designerId": "7c51f462-c6b0-471b-b25f-4096a29f1f41",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "centered": false,
+                                                        "html": "Work Phone",
+                                                        "id": "WorkPhoneTitle",
+                                                        "layout|flex": 1,
+                                                        "margin": null,
+                                                        "padding": null,
+                                                        "style": null,
+                                                        "styleHtmlCls": "ContactDetailLabel",
+                                                        "styleHtmlContent": true,
+                                                        "ui": null
+                                                    },
+                                                    "designerId": "67eccd94-7438-46fd-be31-55b741ffbddc"
+                                                },
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "id": "workphonelabel",
+                                                        "layout|flex": 2,
+                                                        "styleHtmlCls": "ContactDetailValueLabel",
+                                                        "styleHtmlContent": true
+                                                    },
+                                                    "designerId": "2f1b5b5a-d242-4039-8589-b732e59b7aa5"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Ext.Container",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "container|align": null,
+                                                "height": "50px",
+                                                "id": "ContactDetailBlackBerryRow",
+                                                "layout": "hbox",
+                                                "scrollable": null,
+                                                "styleHtmlCls": null
+                                            },
+                                            "designerId": "35ea212d-498c-4bc6-9698-e414f555b100",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "centered": false,
+                                                        "html": "BlackBerry",
+                                                        "id": "blackberrytitle",
+                                                        "layout|flex": 1,
+                                                        "margin": null,
+                                                        "padding": null,
+                                                        "style": null,
+                                                        "styleHtmlCls": "ContactDetailLabel",
+                                                        "styleHtmlContent": true,
+                                                        "ui": null
+                                                    },
+                                                    "designerId": "bce40968-4e8f-402b-8b5b-5a1351cd84ae"
+                                                },
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "id": "blackberrylabel",
+                                                        "layout|flex": 2,
+                                                        "styleHtmlCls": "ContactDetailClickableValueLabel",
+                                                        "styleHtmlContent": true
+                                                    },
+                                                    "designerId": "50184d77-4287-4076-9dd1-431ed3711771"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Ext.Container",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "container|align": null,
+                                                "height": "50px",
+                                                "id": "ContactDetailLocationRow",
+                                                "layout": "hbox",
+                                                "scrollable": null
+                                            },
+                                            "designerId": "3a2683df-9c80-46d1-9924-8e6e584f53ca",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "centered": false,
+                                                        "html": "Location",
+                                                        "id": "locationtitle",
+                                                        "layout|flex": 1,
+                                                        "margin": null,
+                                                        "padding": null,
+                                                        "style": null,
+                                                        "styleHtmlCls": "ContactDetailLabel",
+                                                        "styleHtmlContent": true,
+                                                        "ui": null
+                                                    },
+                                                    "designerId": "1acc93b3-c6f2-4aa3-be4a-e55f1364a0af"
+                                                },
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "id": "locationlabel",
+                                                        "layout|flex": 2,
+                                                        "styleHtmlCls": "ContactDetailValueLabel",
+                                                        "styleHtmlContent": true
+                                                    },
+                                                    "designerId": "e9f68c5e-7cb9-4847-9237-2a1e23b3e2f4"
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "type": "Ext.Container",
+                                            "reference": {
+                                                "name": "items",
+                                                "type": "array"
+                                            },
+                                            "codeClass": null,
+                                            "userConfig": {
+                                                "container|align": null,
+                                                "height": "50px",
+                                                "id": "ContactDetailTwitterRow",
+                                                "layout": "hbox",
+                                                "scrollable": null
+                                            },
+                                            "designerId": "b170f033-6f64-410e-b4e7-365bc780e4c2",
+                                            "cn": [
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "centered": false,
+                                                        "html": "Twitter",
+                                                        "id": "twitteridtitle",
+                                                        "layout|flex": 1,
+                                                        "margin": null,
+                                                        "padding": null,
+                                                        "style": null,
+                                                        "styleHtmlCls": "ContactDetailLabel",
+                                                        "styleHtmlContent": true,
+                                                        "ui": null
+                                                    },
+                                                    "designerId": "e2e5fd10-98fc-421b-a7d8-f7ac93d5926a"
+                                                },
+                                                {
+                                                    "type": "Ext.Label",
+                                                    "reference": {
+                                                        "name": "items",
+                                                        "type": "array"
+                                                    },
+                                                    "codeClass": null,
+                                                    "userConfig": {
+                                                        "id": "twitteridlabel",
+                                                        "layout|flex": 2,
+                                                        "styleHtmlCls": "ContactDetailValueLabel",
+                                                        "styleHtmlContent": true
+                                                    },
+                                                    "designerId": "3dd5ea2b-3622-4047-b536-c51c6c13666a"
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Toolbar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "container|pack": "end",
+                        "docked": "bottom",
+                        "id": "ContactDetailsFooterToolbar"
+                    },
+                    "designerId": "b167e5f8-d195-4d6d-9b26-0833be9fc2a0",
+                    "cn": [
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "contactdetailsbackbutton",
+                                "itemId": "contactdetailsbackbutton",
+                                "text": "Back",
+                                "ui": "back"
+                            },
+                            "designerId": "b4fbe64b-874a-4893-b13b-ec58a36082fe",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onBackButtonTap",
+                                        "implHandler": [
+                                            "var contactlistpanel = this.down('#ContactListPanel');",
+                                            "Ext.getCmp('ContactListActionBar').hide();",
+                                            "",
+                                            "this.animateActiveItem(contactlistpanel, {",
+                                            "    type: 'slide',",
+                                            "    direction: 'right'",
+                                            "});",
+                                            "",
+                                            "var contactimage = this.down('#ContactImage');",
+                                            "contactimage.setSrc(\"resources/images/greyman.jpg\");",
+                                            "",
+                                            "",
+                                            "// clear listeners",
+                                            "var blackberryfield = this.down(\"#blackberrylabel\");",
+                                            "blackberryfield.element.clearListeners();",
+                                            "",
+                                            "var emailfield = this.down(\"#emaillabel\");",
+                                            "emailfield.element.clearListeners();",
+                                            "",
+                                            "var phonefield = this.down(\"#workphonelabel\");",
+                                            "phonefield.element.clearListeners();",
+                                            "",
+                                            "// ContactDetailsPositionLabel",
+                                            "var contactdetailspositionlabel = this.down(\"#ContactDetailsPositionLabel\");",
+                                            "contactdetailspositionlabel.setHtml(\"\");",
+                                            "",
+                                            "var contactdetailscontainer = this.down('#ContactDetailContainer');",
+                                            "contactdetailscontainer.element.clearListeners();",
+                                            "",
+                                            "var contactdetailsrootcontainer = this.down('#ContactDetailsRootContainer');",
+                                            "",
+                                            "contactdetailsrootcontainer.getScrollable().refresh();",
+                                            "contactdetailsrootcontainer.getScrollable().getScroller().scrollTo(0,0, false);",
+                                            ""
+                                        ],
+                                        "name": "tap"
+                                    },
+                                    "designerId": "bda08600-b531-4a73-b351-f7266bc5d4be"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Spacer",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "designerId": "4e033ed5-968d-4559-8546-8e694dfa0051"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "centered": false,
+                "id": "ContactDetailsImageContainer",
+                "layout": "card",
+                "modal": false,
+                "style": ""
+            },
+            "designerId": "c51f27de-ffcb-47b3-b8bb-53270102743b",
+            "cn": [
+                {
+                    "type": "Ext.Toolbar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "bottom",
+                        "hidden": true,
+                        "id": "ContactDetailsImageActionBar"
+                    },
+                    "designerId": "2c383f1a-29e1-4ce4-954f-ffd1b0ef6c6f",
+                    "cn": [
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "ContactDetailsImgBack",
+                                "itemId": "mybutton1",
+                                "text": "Back",
+                                "ui": "back"
+                            },
+                            "designerId": "1c55a2c1-4194-40d4-a4ca-cf4425d1f915",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onContactDetailsImgBackTap",
+                                        "implHandler": [
+                                            "var contactdetailcontainer = this.down('#ContactDetailContainer');",
+                                            "this.animateActiveItem(contactdetailcontainer, {",
+                                            "    type: 'slide',",
+                                            "    direction: 'right'",
+                                            "});",
+                                            "",
+                                            "",
+                                            "var imgContainer = this.down('#ContactDetailsImageContainer');",
+                                            "imgContainer.element.clearListeners();"
+                                        ],
+                                        "name": "tap"
+                                    },
+                                    "designerId": "4d9755e4-0917-439e-8f1b-a2099ca63c60"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "Ext.Container",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "centered": false,
+                        "container|align": "center",
+                        "container|pack": "center",
+                        "id": "ProfileImgContainer",
+                        "layout": "vbox",
+                        "scrollable": false,
+                        "style": "background-color: rgba(0,0,0,0.9);"
+                    },
+                    "designerId": "057e62f6-e134-43ee-9fa4-aa0845f69a3e",
+                    "cn": [
+                        {
+                            "type": "Ext.Img",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "centered": false,
+                                "height": 200,
+                                "id": "ContactDetalsProfileImage",
+                                "itemId": "myimg1",
+                                "src": "resources/images/greyman.jpg",
+                                "width": 200
+                            },
+                            "designerId": "92b58067-b07d-4687-be49-a6347d222d23",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onContactDetalsProfileImageTap",
+                                        "implHandler": [
+                                            "var imageactionbar = this.down('#ContactDetailsImageActionBar');",
+                                            "imageactionbar.show(true);"
+                                        ],
+                                        "name": "tap"
+                                    },
+                                    "designerId": "15dc97d4-e584-4252-a168-646259f57639"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "Ext.Container",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "docked": null,
+                "id": "ContactDetailMapContainer",
+                "layout": "fit",
+                "ui": ""
+            },
+            "designerId": "55d7c7c0-fd45-4f86-9186-92164900a8ca",
+            "cn": [
+                {
+                    "type": "Ext.Map",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "id": "ContactMap",
+                        "mapOptions": [
+                            "{",
+                            "    zoom: 6",
+                            "}"
+                        ]
+                    },
+                    "designerId": "94498ef2-4b7c-4376-b810-949a5d00b3f7"
+                },
+                {
+                    "type": "Ext.Toolbar",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "docked": "bottom",
+                        "id": "MapActionBar"
+                    },
+                    "designerId": "c7fca708-edf1-444d-8507-50996a35291c",
+                    "cn": [
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "id": "MapActionBarBtn",
+                                "itemId": "mybutton3",
+                                "text": "Back",
+                                "ui": "back"
+                            },
+                            "designerId": "ff730eac-5f89-46cd-8a78-16f207df9fef",
+                            "cn": [
+                                {
+                                    "type": "basiceventbinding",
+                                    "reference": {
+                                        "name": "listeners",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "fn": "onMapActionBarBtnTap",
+                                        "implHandler": [
+                                            "var contactdetailcontainer = this.down('#ContactDetailContainer');",
+                                            "this.animateActiveItem(contactdetailcontainer, {",
+                                            "    type: 'slide',",
+                                            "    direction: 'right'",
+                                            "});",
+                                            ""
+                                        ],
+                                        "name": "tap"
+                                    },
+                                    "designerId": "a9d522cb-8a1d-41ec-a216-7cfd6bce5bf0"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Spacer",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "designerId": "515c9bc6-bf06-4b8e-a855-c7903b280cda"
+                        },
+                        {
+                            "type": "Ext.Button",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "userConfig": {
+                                "hidden": true,
+                                "iconCls": "maps",
+                                "text": "Maps"
+                            },
+                            "designerId": "84376af0-7980-42be-9560-8520f8a3dee3",
+                            "cn": [
+                                {
+                                    "type": "fixedfunction",
+                                    "reference": {
+                                        "name": "items",
+                                        "type": "array"
+                                    },
+                                    "codeClass": null,
+                                    "userConfig": {
+                                        "designer|params": [
+                                            "button",
+                                            "e"
+                                        ],
+                                        "fn": "handler",
+                                        "implHandler": [
+                                            "if(MyApp.globals.os==\"BlackBerry 10\" && (MyApp.globals.packager==\"Cordova\" || MyApp.globals.packager==\"WebWorks\")){",
+                                            "        if(Ext.getCmp('ContactDetailMapContainer').location!==null){",
+                                            "",
+                                            "            var geolocation=Ext.getCmp('ContactDetailMapContainer').location;",
+                                            "",
+                                            "            var mapsArgs = JSON.stringify(",
+                                            "                    {",
+                                            "                        \"center\": {",
+                                            "                            \"latitude\": geolocation.lat,",
+                                            "                            \"longitude\": geolocation.lng,",
+                                            "                            \"altitude\": 50000",
+                                            "                        }",
+                                            "                    }",
+                                            "",
+                                            "                );",
+                                            "",
+                                            "            console.log(\"Map args:\"+mapsArgs);",
+                                            "",
+                                            "            blackberry.invoke.invoke({",
+                                            "                action: \"bb.action.OPEN\",",
+                                            "                type: \"application/vnd.rim.map.action-v1\",",
+                                            "                data: mapsArgs",
+                                            "            });",
+                                            "        }",
+                                            "        else{",
+                                            "            Ext.Msg.alert('Error', 'Sorry, there is valid location.', Ext.emptyFn); ",
+                                            "            console.log(\"no geolocation data!\");",
+                                            "        }",
+                                            "        return;    ",
+                                            "}",
+                                            "else if(MyApp.globals.os==\"iOS\" && MyApp.globals.packager==\"Cordova\"){",
+                                            "    window.open('http://maps.apple.com/?q='+this.query, '_system');",
+                                            "    return;",
+                                            "}",
+                                            "else{ // should never occur",
+                                            "    Ext.Msg.alert('Error', 'Sorry, there is no supported maps app.', Ext.emptyFn); ",
+                                            "    console.log(this);",
+                                            "    return;",
+                                            "}"
+                                        ]
+                                    },
+                                    "designerId": "fc828e9f-bc8c-49fd-aff4-9a2b5039cd5e"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Ext.Spacer",
+                            "reference": {
+                                "name": "items",
+                                "type": "array"
+                            },
+                            "codeClass": null,
+                            "designerId": "c0e41bc8-e469-4285-9344-c5e4587c2df1"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "fixedfunction",
+            "reference": {
+                "name": "items",
+                "type": "array"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "fn": "initialize",
+                "implHandler": [
+                    "this.callParent();",
+                    "",
+                    "var storeAutoload = {",
+                    "    callback: function(el, succ, resp, opts)",
+                    "    {",
+                    "        console.log(succ.success);",
+                    "        if(succ.success===false){",
+                    "            Ext.Msg.alert(",
+                    "                        \"Internet Required\",",
+                    "                        \"This app requires access to the internet. Please close this app and reopen when you have interent access\"",
+                    "                        );",
+                    "        }",
+                    "    }",
+                    "};",
+                    "",
+                    "var peoplestore = Ext.getStore(\"PeopleStore\");",
+                    "",
+                    "peoplestore.getProxy().setUrl(appSettings.userlist_url);",
+                    "peoplestore.setAutoLoad(storeAutoload);",
+                    "//peoplestore.load();",
+                    ""
+                ]
+            },
+            "designerId": "1ee6fa63-51ba-49b6-ac4e-865f819fed1f"
+        }
+    ]
+}

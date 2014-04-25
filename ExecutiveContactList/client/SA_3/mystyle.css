@@ -1,0 +1,94 @@
+.photoframe{
+    float: left;
+    border: 1px solid #ccc;
+    width: 40px;
+    height: 40px;
+    background-image: url('resources/images/greyman40x40.jpg');
+    margin: 0px 15px;
+}
+
+.photo2frame{
+    float: left;
+    border: 1px solid #ccc;
+    width: 40px;
+    height: 40px;
+    margin: 0px 15px;
+    background-color: #000;
+}
+
+.personinfo{
+	line-height: 100%;
+    white-space: normal;
+    display: inline-block;
+	font-family: "Slate Pro", Slate, sans-serif;    
+	font-size: 12pt;    
+
+}
+#ContactDetailsSummaryInfoContainer{
+	font-family: "Slate Pro", Slate, sans-serif;
+}
+
+#ContactDetailsFullnameLabel{
+	font-weight: bold;	
+	font-size: 1.3em;
+}
+
+#DetailInfoActionList .x-item-pressed{
+    color: #0aace5;
+    background-color: black;
+}
+
+.x-item-pressed .photo2frame{
+    background-color: #0aace5;
+    color: #0aace5;
+}
+
+.emailIcon{
+	-webkit-mask-image: url('resources/images/icon_email.png');
+}
+.bbmIcon{
+	-webkit-mask-image: url('resources/images/icon_bbm.png');
+}
+.smsIcon{
+	-webkit-mask-image: url('resources/images/icon_sms.png');
+}
+.twitterIcon{
+	-webkit-mask-image: url('resources/images/icon_twitter.png');
+}
+.mapIcon{
+	-webkit-mask-image: url('resources/images/icon_map.png');
+}
+.blackberryIcon{
+	-webkit-mask-image: url('resources/images/icon_blackberry.png');
+}    
+.phoneIcon{
+	-webkit-mask-image: url('resources/images/icon_landlinephone.png');
+}    
+
+.ContactDetailLabel{
+	background-color: #f8f8f8;  
+	line-height: 50px;
+	padding: 0px 5px;
+	margin: 3px;
+}
+
+.ContactDetailValueLabel{
+	background-color: rgba(0,0,0,0.1);  
+	line-height: 50px;
+	padding: 0px 5px;
+	margin: 3px 3px 3px 7px;
+	
+}
+
+.ContactDetailClickableValueLabel{
+	background-color: rgba(0,0,0,0.1);  
+	line-height: 50px;
+	padding: 0px 5px;
+	margin: 3px 3px 3px 7px;
+	color: #0073bc; /*blue*/
+	font-size: 0.8em;
+	
+}
+
+.ContactList{
+}

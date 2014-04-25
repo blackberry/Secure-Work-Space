@@ -1,0 +1,79 @@
+{
+    "type": "jsonstore",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "autoSync": true,
+        "designer|userClassName": "PeopleStore",
+        "groupDir": null,
+        "model": "PeopleModel",
+        "requires": [
+            "Ext.MessageBox"
+        ],
+        "storeId": "PeopleStore",
+        "totalCount": null
+    },
+    "designerId": "bf218f1d-5bc1-4290-9735-d6ae660a31f9",
+    "cn": [
+        {
+            "type": "Ext.util.Grouper",
+            "reference": {
+                "name": "grouper",
+                "type": "object"
+            },
+            "codeClass": null,
+            "designerId": "e25b6f67-e95c-4601-bd8f-dc1128042571",
+            "cn": [
+                {
+                    "type": "fixedfunction",
+                    "reference": {
+                        "name": "items",
+                        "type": "array"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "designer|params": [
+                            "item"
+                        ],
+                        "fn": "groupFn",
+                        "implHandler": [
+                            "return item.get('lastname')[0];"
+                        ]
+                    },
+                    "designerId": "2a30da09-7957-4067-8e55-6f6b0d89cb74"
+                }
+            ]
+        },
+        {
+            "type": "Ext.data.proxy.JsonP",
+            "reference": {
+                "name": "proxy",
+                "type": "object"
+            },
+            "codeClass": null,
+            "userConfig": {
+                "designer|createAlias": null,
+                "designer|displayName": null,
+                "url": null
+            },
+            "designerId": "5f0386a6-312f-4c90-ad97-63d6e0dce338",
+            "cn": [
+                {
+                    "type": "Ext.data.reader.Json",
+                    "reference": {
+                        "name": "reader",
+                        "type": "object"
+                    },
+                    "codeClass": null,
+                    "userConfig": {
+                        "rootProperty": "people"
+                    },
+                    "designerId": "7c106c21-3575-4407-bcc5-3fd71c74ff8e"
+                }
+            ]
+        }
+    ]
+}

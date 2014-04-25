@@ -1,0 +1,14 @@
+{
+    "type": "libraryresource",
+    "reference": {
+        "name": "items",
+        "type": "array"
+    },
+    "codeClass": null,
+    "userConfig": {
+        "basePath": null,
+        "designer|userClassName": "Library",
+        "theme": "Blackberry"
+    },
+    "designerId": "0891e196-675a-4b92-b366-32a3a3dcd60d"
+}

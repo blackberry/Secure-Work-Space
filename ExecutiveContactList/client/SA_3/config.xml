@@ -1,0 +1,14 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="community.blackberry.ecl" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>ECL</name>
+    <description>
+		An app written in Sencha to demo BB10 Theme
+    </description>
+    <author email="shiksingh@blackberry.com" href="http://code.shikhir.com">
+        Shikhir Singh
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+	<icon src="resources/icons/icon@2x.png" />
+
+</widget>
