@@ -15,10 +15,10 @@
 # limitations under the License.
 
 
-echo "$(tput setaf 2)BlackBerry SWS Auto-Resigner for iOS v1.0.0  $(tput sgr 0)"
+echo "$(tput setaf 2)BlackBerry SWS Auto-Resigner for iOS v1.0.1  $(tput sgr 0)"
 
 echo "Looking for iOS Signing Identity..."
-if (set -u; : $SWSSIGNIDENTITY) 2> /dev/null 
+if (set -u; : $SWSSIGNIDENTITY) 2> /dev/null
 then
 	SWSsignidentity=$SWSSIGNIDENTITY
 	echo "Found it! Using Signing Identity: ${SWSSIGNIDENTITY}"
@@ -30,37 +30,37 @@ else
 fi
 
 echo "Looking for iOS SWS Wrapped App..."
-if (set -u; : $SWSWrappedAppFile) 2> /dev/null 
+if (set -u; : $SWSWrappedAppFile) 2> /dev/null
 then
 	fileName=$SWSWrappedAppFile
 	echo "Using SWS Wrapped App File: ${filename}"
 else
 	echo "Wrapped App Enviroment Variable not set. Please Enter the full path to the wrapped app: /Users/User/sws/MyWrappedApp.ipa"
-	echo -ne "> "	
+	echo -ne "> "
 	read fileName
 	if [ -f "$fileName" ]
-	then 
+	then
 		echo "Good. App File Found $fileName"
 	else
 		echo "$(tput setaf 5)ERROR: $(tput setaf 1)iOS SWS Wrapped App file name $fileName location is inaccurate $(tput sgr 0)"
 		exit -3
 	fi
-	
+
 	echo "Using Wrapped App: $fileName"
 fi
 
 
 echo "Looking for Mobile Provisioning Profile..."
-if (set -u; : $SWSProvisioningProfile) 2> /dev/null 
+if (set -u; : $SWSProvisioningProfile) 2> /dev/null
 then
 	ProvisionProfile=$SWSProvisioningProfile
 	echo "Found it! Using SWS Mobile Provisioning Profile: ${ProvisionProfile}"
 else
 	echo "SWS Mobile Provisioning Profile not set. Please enter the full path to your MobileProvisioningProfile: /Users/User/sws/ProfileName.mobileprovision"
-	echo -ne "> "	
+	echo -ne "> "
 	read ProvisionProfile
 	if [ -f "$ProvisionProfile" ]
-	then 
+	then
 		echo "Good. Provisioning Profile File Found $ProvisionProfile"
 	else
 		echo "$(tput setaf 5)ERROR: $(tput setaf 1)Provisioning Profile $ProvisionProfile location is inaccurate $(tput sgr 0)"
@@ -111,7 +111,7 @@ if unzip "$fileName"; then
 else
 	echo "$(tput setaf 5)ERROR: $(tput setaf 1) Unzipping file failed! Is $fileName valid? $(tput sgr 0)"
 	echo "The working folder sws-resigned-iOS-app has been created. Please delete it after diagnosing the error"
-	
+
 	exit -11
 fi
 
@@ -135,12 +135,16 @@ echo "$(tput setaf 2)Step 3 - Changing BundleIdentifier to ${appid} in Payload/$
 echo "$(tput setaf 2)Step 4 - Moving ${ProvisionProfile} to Payload/${appName}/embedded.mobileprovision $(tput sgr 0)"
 cp "${ProvisionProfile}" "Payload/${appName}/embedded.mobileprovision"
 
+# make a backup of the entitlements file in /Payload/AppName.app/Entitlements.plist
+rm Payload/${appName}/Entitlements.plist 2> /dev/null
+mv sws-entitlements.plist Payload/${appName}/Entitlements.plist
+
 # Sign the app
 echo "$(tput setaf 2)Step 5 - Signing the app!$(tput sgr 0)"
 
-if [ -f "Payload/${appName}/ResourceRules.plist" ]; then 
+if [ -f "Payload/${appName}/ResourceRules.plist" ]; then
 	echo "ResourceRules.plist exists, so I'm going to include it when I try and sign"
-	if /usr/bin/codesign -f -vvv -s "${SWSsignidentity}" --entitlements "sws-entitlements.plist" --resource-rules "Payload/${appName}/ResourceRules.plist" "Payload/${appName}"; then
+	if /usr/bin/codesign -f -vvv -s "${SWSsignidentity}" --entitlements "Payload/${appName}/Entitlements.plist" --resource-rules "Payload/${appName}/ResourceRules.plist" "Payload/${appName}"; then
 		echo "$(tput setaf 3)Signing Complete - No errors! It Worked! $(tput sgr 0)"
 	else
 		echo "$(tput setaf 5)FATAL ERROR: $(tput setaf 1)Signing FAILED!!!! Recheck parameters. You may have to do this manually. See instructions on developer.blackberry.com $(tput sgr 0)"
@@ -171,12 +175,8 @@ echo "$(tput setaf 2)Step 6 - Verifing the app - READ BELOW CAREFULLY$(tput sgr 
 codesign --verify -vvv "Payload/${appName}"
 codesign -dvvv "Payload/${appName}"
 
-#newFileName 
+#newFileName
 newFileName=${appIdName}-resigned.ipa
-
-# make a backup of the entitlements file in /Payload/AppName.app/Entitlements.plist
-rm Payload/${appName}/Entitlements.plist 2> /dev/null 
-mv sws-entitlements.plist Payload/${appName}/Entitlements.plist
 
 
 #Repackage the file
