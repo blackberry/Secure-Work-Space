@@ -1,12 +1,12 @@
 # SWS Auto-Resigner Script
 
-The purpose of this script is to simplify the resigning of an iOS Secure Work Space app. Apps need to be re-signed after they are wrapped with BES. Wrapping an app invalidates it's previous signature. The manual process for wrapping an app is documented on [developer.blackberry.com](http://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) and the [BES Universal Device Service Documentation](http://docs.blackberry.com/en/admin/deliverables/62506/BES10_v10.2.1_UDS_Advanced_Admin_Guide_en.pdf) 
+The purpose of this script is to simplify the resigning of an iOS Secure Work Space app. Apps need to be re-signed after they are wrapped with BES. Wrapping an app invalidates it's previous signature. The manual process for wrapping an app is documented on [developer.blackberry.com](http://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) and the [BES Universal Device Service Documentation](http://docs.blackberry.com/en/admin/deliverables/62506/BES10_v10.2.1_UDS_Advanced_Admin_Guide_en.pdf)
 
 
 The sample code for this application is Open Source under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
 
 
-**Author** 
+**Author**
 
 * [Shikhir Singh](http://code.shikhir.com/)
 
@@ -14,10 +14,11 @@ The sample code for this application is Open Source under the [Apache 2.0 Licens
 **Release History**
 
 * **V1.0.0** - Initial Release
+* **V1.0.1** - Bug fixes
 
 **Dependencies**
 
-* OSX 
+* OSX
 * Xcode Command Line Tools
 * BES Wrapped iOS App(the .ipa file)
 * [iOS Enterprise Signing Keys](https://developer.apple.com/programs/ios/enterprise/)
@@ -47,9 +48,9 @@ None
 
 ## Disclaimer
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING 
-BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE 
-AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 
-ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR 
-OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING
+BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR
+ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
