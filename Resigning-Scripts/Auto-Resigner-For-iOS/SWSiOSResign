@@ -15,7 +15,7 @@
 # limitations under the License.
 
 
-echo "$(tput setaf 2)BlackBerry SWS Auto-Resigner for iOS v1.0.1  $(tput sgr 0)"
+echo "$(tput setaf 2)BlackBerry SWS Auto-Resigner for iOS v1.0.2  $(tput sgr 0)"
 
 echo "Looking for iOS Signing Identity..."
 if (set -u; : $SWSSIGNIDENTITY) 2> /dev/null
@@ -33,7 +33,7 @@ echo "Looking for iOS SWS Wrapped App..."
 if (set -u; : $SWSWrappedAppFile) 2> /dev/null
 then
 	fileName=$SWSWrappedAppFile
-	echo "Using SWS Wrapped App File: ${filename}"
+	echo "Using SWS Wrapped App File: ${fileName}"
 else
 	echo "Wrapped App Enviroment Variable not set. Please Enter the full path to the wrapped app: /Users/User/sws/MyWrappedApp.ipa"
 	echo -ne "> "
@@ -176,7 +176,7 @@ codesign --verify -vvv "Payload/${appName}"
 codesign -dvvv "Payload/${appName}"
 
 #newFileName
-newFileName=${appIdName}-resigned.ipa
+newFileName=sws-wrapped-resigned.ipa
 
 
 #Repackage the file

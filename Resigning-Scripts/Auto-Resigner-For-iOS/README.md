@@ -11,10 +11,10 @@ The sample code for this application is Open Source under the [Apache 2.0 Licens
 * [Shikhir Singh](http://code.shikhir.com/)
 
 
-**Release History**
+**Version**
 
-* **V1.0.0** - Initial Release
-* **V1.0.1** - Bug fixes
+* **V1.0.2** - Updated for bug fixes
+
 
 **Dependencies**
 
