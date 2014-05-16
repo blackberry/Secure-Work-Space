@@ -44,7 +44,7 @@ Just type in ./SWSiOSResign and you will be prompted to enter the parameters
 
 **Known Issues**
 
-1. This script will not work if a wildcard mobile provisioning profile is used. Please sign manually according to the [docs](http://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) if using a wildcard mobile provisioning profile is a must.
+1. This script will not work if a wildcard mobile provisioning profile is used. Please sign manually according to the [docs](http://developer.blackberry.com/devzone/develop/enterprise/resign_work_space_app.html) if using a wildcard mobile provisioning profile is a must.
 
 
 ## Disclaimer
