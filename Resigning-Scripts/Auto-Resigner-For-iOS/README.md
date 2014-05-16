@@ -28,7 +28,7 @@ The sample code for this application is Open Source under the [Apache 2.0 Licens
 
 1. Set Enviroment Variable SWSSIGNIDENTITY to the iOS Signing Identity
 2. Set Enviroment Variable SWSWrappedAppFile to the full path to the wrapped app
-3. Set Enviroment Variable SWSProvisioningProfile to the app Mobile Provisioning Profile
+3. Set Enviroment Variable SWSProvisioningProfile to the app Mobile Provisioning Profile (see Known Issues section below)
 
 Example
 ```
@@ -43,7 +43,8 @@ OR
 Just type in ./SWSiOSResign and you will be prompted to enter the parameters
 
 **Known Issues**
-None
+
+1. This script will not work if a wildcard mobile provisioning profile is used. Please sign manually according to the [docs](http://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) if using a wildcard mobile provisioning profile is a must.
 
 
 ## Disclaimer
