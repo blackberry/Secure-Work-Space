@@ -26,9 +26,9 @@ The sample code for this application is Open Source under the [Apache 2.0 Licens
 
 **How to re-sign a wrapped app using this script**
 
-1. Set Enviroment Variable SWSSIGNIDENTITY to the iOS Signing Identity
-2. Set Enviroment Variable SWSWrappedAppFile to the full path to the wrapped app
-3. Set Enviroment Variable SWSProvisioningProfile to the app Mobile Provisioning Profile (see Known Issues section below)
+1. Set Environment Variable SWSSIGNIDENTITY to the iOS Signing Identity
+2. Set Environment Variable SWSWrappedAppFile to the full path to the wrapped app
+3. Set Environment Variable SWSProvisioningProfile to the app Mobile Provisioning Profile (see Known Issues section below)
 
 Example
 ```
@@ -45,7 +45,7 @@ Just type in ./SWSiOSResign and you will be prompted to enter the parameters
 **Known Issues**
 
 1. This script will not work if a wildcard mobile provisioning profile is used. Please sign manually according to the [docs](http://developer.blackberry.com/devzone/develop/enterprise/resign_work_space_app.html) if using a wildcard mobile provisioning profile is a must.
-
+2. Ensure app name or file names do not contain spaces
 
 ## Disclaimer
 
