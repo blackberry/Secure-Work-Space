@@ -1,6 +1,6 @@
 # SWS Auto-Resigner Script
 
-The purpose of this script is to simplify the resigning of an iOS Secure Work Space app. Apps need to be re-signed after they are wrapped with BES 10+. Wrapping an app invalidates it's previous signature. The manual process for wrapping an app is documented on [developer.blackberry.com](http://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) and the [BES Universal Device Service Documentation](http://docs.blackberry.com/en/admin/deliverables/62506/BES10_v10.2.1_UDS_Advanced_Admin_Guide_en.pdf)
+The purpose of this script is to simplify the resigning of an iOS Secure Work Space app. Apps need to be re-signed after they are [wrapped](http://devblog.blackberry.com/2014/12/secure-work-space-enterprise-and-partner-wrapping/) with BES 10+. Wrapping an app invalidates it's previous signature. The manual process for wrapping an app is documented on [developer.blackberry.com](http://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) and the [BES Universal Device Service Documentation](http://docs.blackberry.com/en/admin/deliverables/62506/BES10_v10.2.1_UDS_Advanced_Admin_Guide_en.pdf)
 
 
 The sample code for this application is Open Source under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0.html).
@@ -49,6 +49,7 @@ Just type in ./SWSiOSResign and you will be prompted to enter the parameters
 
 **Additional Documentation**
 * [Blog: Using the script](http://devblog.blackberry.com/2014/10/re-signing-ios-apps/)
+* [Blog: Differences between Enterprise and Partner Wrapping](http://devblog.blackberry.com/2014/12/secure-work-space-enterprise-and-partner-wrapping/)
 
 ## Disclaimer
 
