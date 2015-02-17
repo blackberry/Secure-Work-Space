@@ -13,7 +13,7 @@ The sample code for this application is Open Source under the [Apache 2.0 Licens
 
 **Version**
 
-* **V1.0.2** - Updated for bug fixes
+* **V1.0.3** - Updated for entitlements file bug fix during codesign
 
 
 **Dependencies**
