@@ -157,7 +157,7 @@ if [ -f "Payload/${appName}/ResourceRules.plist" ]; then
 else
 	echo "ResourceRules.plist not found. No Problem."
 
-	if /usr/bin/codesign -f -vvv -s "${SWSsignidentity}" --entitlements "sws-entitlements.plist" "Payload/${appName}"; then
+	if /usr/bin/codesign -f -vvv -s "${SWSsignidentity}" --entitlements "Payload/${appName}/Entitlements.plist" "Payload/${appName}"; then
 		echo "$(tput setaf 3)Signing Complete - No errors! Sweet! $(tput sgr 0)"
 	else
 		echo "$(tput setaf 5)FATAL ERROR: $(tput setaf 1)Signing FAILED!!!! Recheck parameters. You may have to do this manually. See instructions on developer.blackberry.com $(tput sgr 0)"
