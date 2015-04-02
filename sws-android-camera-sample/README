@@ -1,0 +1,44 @@
+# Secure Workspace Camera Sample App for Android
+
+This sample is a proof of concept application that allows the user to take secure pictures from the Secure Workspace environment without said images being available on the personal side.
+
+
+The pictures taken from this app will automatically be stored in the Shared Media folder in the work space, and it will also appear as an encrypted file in the personal space. For more information on the camera implementation, please refer to the [Android Developer Samples](http://developer.android.com/guide/topics/media/camera.html) 
+
+**Applies To**
+
+* Android SDK Version 10 - 19. (Android 2.3.3 to 4.4)
+
+**Author(s)** 
+
+* Russell Borja
+
+**Contributing**
+
+* To contribute code to this repository you must be [signed up as an official contributor](http://blackberry.github.com/howToContribute.html).
+
+
+## Screenshots ##
+
+![image](screenshot.png)
+
+
+## How To Build
+
+1. Clone the repo to your computer.
+2. Open Android Studio or Eclipse and import the project files.
+3. Expand General, and select Existing Projects into Workspace. Click Next.
+4. On the dropdown menu, select Build > Generate Signed APK... Create a new key store if there is not one already available and remember the password and alias.
+5. Once the signed APK has been built, it must be securely wrapped before being deployed. Login to the BES server and go to Settings > External integration > Secure Work Space. Browse for the APK file in the /app folder and upload.
+6. Download the wrapped file and move it to the same directory as the key store generated in step 4. Execute the following command with your own credentials in []:
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore [keystorename].jks [APK filename].apk [key alias]
+7. Upload the wrapped and resigned file to the BES server by going to Apps > Add an app. Insert the app into any app groups you wish to deploy to.
+8. Once the app has been deployed, proceed to install the app on the device through the BES12 app.
+
+
+## Disclaimer
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
