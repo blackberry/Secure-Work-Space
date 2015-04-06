@@ -41,8 +41,15 @@ iOS 8 or later
 ## How To Build and Deploy
 
 1. Clone the repo to your computer.
-2. Build the project and create an Archive(IPA) using Xcode.
-3. Deploy the exported IPA file via BES Secure Work Space after securing and resign the app. 
+2. Create Explicit App ID for the app.
+    Note: Not recommended to create Wildcard App ID
+3. Create In-House Distribute Provisioning Profile from iOS Developer Enterprise Account.
+4. Create an archive of the app(IPA), distribute the archive as Enterprise Deployment signing with the In-House distribution provisioning profile.
+5. Secure the app via BES
+6. Resign the app with the In-House distribution provisioning profile.
+    Note: Use [SWS Auto-Resigner Script](https://github.com/ekcworld/Secure-Work-Space/tree/master/Resigning-Scripts/Auto-Resigner-For-iOS).
+7. Deploy the resigned app via BES
+
 For more information on how to deploy iOS apps in the work space, please visit [Installing Android or iOS apps in the work space](https://developer.blackberry.com/devzone/develop/enterprise/install_android_or_ios_work_space_app.html) 
 
 
