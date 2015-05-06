@@ -23,9 +23,15 @@ then
 	SWSsignidentity=$SWSSIGNIDENTITY
 	echo "Found it! Using Signing Identity: ${SWSSIGNIDENTITY}"
 else
-	echo "No Signing Found. Please Enter your Signing Identity. For Example: iPhone Distribution: COMPANY NAME, LLC (44343QX)"
-	echo -ne "> "
+	identities=$(/usr/bin/security find-identity -v -p codesigning | sed -E '/valid identities found/d;s/.*\"([^\"]+)\".*/\1/')
+	def=$(echo "${identities}" | grep "Distribution" | head -1)
+	if [ -z "$def" ]
+	then
+		def=$(echo "${identities}" | head -1)
+	fi
+	echo -ne "No Signing Found. Please enter your signing identity [${def}] : "
 	read SWSsignidentity
+	SWSsignidentity=${SWSsignidentity:-$def}
 	echo "Using Signing Identity: $SWSsignidentity"
 fi
 
@@ -35,9 +41,10 @@ then
 	fileName=$SWSWrappedAppFile
 	echo "Using SWS Wrapped App File: ${fileName}"
 else
-	echo "Wrapped App Enviroment Variable not set. Please Enter the full path to the wrapped app: /Users/User/sws/MyWrappedApp.ipa"
-	echo -ne "> "
+	def=$(ls -l $PWD/*.ipa | grep -v sws-wrapped-resigned.ipa | awk '{print $9}')
+	echo -ne "Wrapped App Enviroment Variable not set. Please enter the full path to the wrapped app [${def}] : "
 	read fileName
+	fileName=${fileName:-$def}
 	if [ -f "$fileName" ]
 	then
 		echo "Good. App File Found $fileName"
@@ -56,9 +63,10 @@ then
 	ProvisionProfile=$SWSProvisioningProfile
 	echo "Found it! Using SWS Mobile Provisioning Profile: ${ProvisionProfile}"
 else
-	echo "SWS Mobile Provisioning Profile not set. Please enter the full path to your MobileProvisioningProfile: /Users/User/sws/ProfileName.mobileprovision"
-	echo -ne "> "
+	def=$(ls $PWD/*.mobileprovision | head -1)
+	echo -ne "SWS Mobile Provisioning Profile not set. Please enter the full path to your MobileProvisioningProfile [${def}] : "
 	read ProvisionProfile
+	ProvisionProfile=${ProvisionProfile:-$def}
 	if [ -f "$ProvisionProfile" ]
 	then
 		echo "Good. Provisioning Profile File Found $ProvisionProfile"
@@ -106,7 +114,7 @@ echo "${appid}"
 
 #Extract the ipa file
 echo -e "$(tput setaf 2)Step 1 - unzipping file ${fileName} $(tput sgr 0)"
-if unzip "$fileName"; then
+if unzip -q "$fileName"; then
 	echo "File unzipped!"
 else
 	echo "$(tput setaf 5)ERROR: $(tput setaf 1) Unzipping file failed! Is $fileName valid? $(tput sgr 0)"
