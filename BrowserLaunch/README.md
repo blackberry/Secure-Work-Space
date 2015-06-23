@@ -16,7 +16,7 @@ Additionally, this sample demonstrates how Secure Workspace limits the intent ch
 
 ## Screenshots ##
 
-![Screenshot](/screenshots/screenshot.png?raw=true "Screenshot")
+![Screenshot](screenshots/screenshot.png)
 
 ## How To Build
 
