@@ -1,0 +1,11 @@
+(res/mipmap-xhdpi-v4/ic_launcher.png) found an alternate icon with better size:impact=1
+(AndroidManifest.xml) app-widget:impact=5
+(AndroidManifest.xml) minSdkVersion: 14 is higher than 10: required minimal BlackBerry OS version = 10.2:impact=5
+(AndroidManifest.xml) targetSdkVersion: 22 is higher than 18:impact=1
+[ERROR] (AndroidManifest.xml) no launchable activity
+(com/afrolkin/widgettest/WidgetProvider.java:25) uses package: android.appwidget:impact=3
+(com/afrolkin/widgettest/WidgetProvider.java:17) uses package: android.appwidget:impact=3
+(com/afrolkin/widgettest/WidgetProvider.java:19) uses package: android.appwidget:impact=3
+Packaging failed for verification errors.
+Summary: [5]=3; [4]=0; [3]=3; [2]=0; [1]=2;
+Impact Legend: [5]=Severe; [4]=High /context; [3]=Medium /context; [2]=Medium-low /context; [1]=Minor;
