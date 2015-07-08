@@ -28,7 +28,7 @@ iOS 8 or later
 
 ## Screenshots ##
 
-![image](screenshot.png)
+![image](screenshot.jpg)
 
 
 ## How To Build and Deploy
