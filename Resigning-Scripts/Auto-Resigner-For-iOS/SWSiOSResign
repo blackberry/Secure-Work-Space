@@ -137,7 +137,7 @@ cp "${ProvisionProfile}" "Payload/${appName}/embedded.mobileprovision"
 
 # make a backup of the entitlements file in /Payload/AppName.app/Entitlements.plist
 rm Payload/${appName}/Entitlements.plist 2> /dev/null
-mv sws-entitlements.plist Payload/${appName}/Entitlements.plist
+mv sws-entitlements.plist "Payload/${appName}/Entitlements.plist"
 
 # Sign the app
 echo "$(tput setaf 2)Step 5 - Signing the app!$(tput sgr 0)"
